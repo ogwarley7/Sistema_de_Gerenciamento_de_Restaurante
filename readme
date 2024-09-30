@@ -1,0 +1,83 @@
+# Sistema de Gerenciamento de Restaurante
+
+Este projeto é um sistema de gerenciamento para restaurantes que utiliza um banco de dados MySQL. O sistema permite o cadastro de clientes, mesas, pedidos e itens de pedidos.
+
+## Estrutura do Banco de Dados
+
+O banco de dados é composto pelas seguintes tabelas:
+
+- **Clientes**: Armazena informações dos clientes, como nome, telefone e email.
+- **Mesas**: Armazena detalhes sobre as mesas, incluindo número e capacidade.
+- **Pedidos**: Registra os pedidos feitos por clientes, incluindo data e total.
+- **Itens_Pedido**: Contém os itens de cada pedido, com descrição, quantidade e preço unitário.
+
+## Instalação
+
+Para instalar e executar o projeto, siga os passos abaixo:
+
+1. Clone este repositório:
+   ```
+   git clone https://github.com/seu-usuario/sistema-restaurante.git
+   cd sistema-restaurante
+DROP DATABASE IF EXISTS RestauranteDB;
+--
+CREATE DATABASE RestauranteDB;
+
+Use RestauranteDB;
+
+CREATE TABLE Clientes (
+id_cliente INT AUTO_INCREMENT PRIMARY KEY,
+nome VARCHAR(100) NOT NULL,
+telefone VARCHAR(15),
+email VARCHAR(100));
+
+CREATE TABLE Mesas (
+id_mesa INT AUTO_INCREMENT PRIMARY KEY,
+numero_mesa INT NOT NULL,
+capacidade INT NOT NULL);
+
+CREATE TABLE Pedidos(
+id_pedido INT AUTO_INCREMENT PRIMARY KEY,
+id_cliente INT,
+id_mesa INT,
+data_pedido DATETIME NOT NULL,
+total DECIMAL(10,2) NOT NULL,
+FOREIGN KEY (id_cliente) REFERENCES Clientes (id_cliente),
+FOREIGN KEY (id_mesa) REFERENCES Mesas (id_mesa));
+
+CREATE TABLE Itens_Pedido(
+id_item INT AUTO_INCREMENT PRIMARY KEY,
+id_pedido INT,
+descricao_item VARCHAR(255) NOT NULL,
+quantidade INT NOT NULL,
+preco_unitario DECIMAL(10,2) NOT NULL,
+FOREIGN KEY (id_pedido) REFERENCES Pedidos (id_pedido) ON DELETE CASCADE);
+
+INSERT INTO Clientes(nome, telefone, email) VALUES ('João Silva', '4891465871', 'joaosilva@gmail.com'),
+('Maria Oliveira', '489184147549','maria.oliveira@gmail.com');
+
+INSERT INTO Mesas (numero_mesa, capacidade) VALUES (1, 4),
+(2, 2);
+
+INSERT INTO Pedidos (id_cliente, id_mesa, data_pedido, total) VALUES (1, 1, NOW(), 100.50),
+(2, 2, NOW(), 45.00);
+
+INSERT INTO Itens_pedido (id_pedido, descricao_item,quantidade,preco_unitario) VALUES (1, 'Pizza', 2, 35.25),
+(2, 'Suco', 1, 10.00);
+
+SELECT * FROM Clientes;
+
+SELECT * FROM Mesas;
+
+SELECT * FROM Pedidos;
+
+SELECT * FROM Itens_pedido;
+
+SELECT p.id_pedido, c.nome AS nome_cliente, p.data_pedido, p.total 
+FROM Pedidos p
+JOIN Clientes c ON p.id_cliente = c.id_cliente;
+
+SELECT ip.id_item, p.id_pedido, c.nome AS nome_cliente, ip.descricao_item, ip.quantidade, ip.preco_unitario 
+FROM Itens_Pedido ip
+JOIN Pedidos p ON ip.id_pedido = p.id_pedido
+JOIN Clientes c ON p.id_cliente = c.id_cliente;
