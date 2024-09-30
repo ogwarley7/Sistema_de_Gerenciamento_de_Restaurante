@@ -1,0 +1,20 @@
+
+---
+
+### .gitignore
+
+
+# Ignorar arquivos de configuração do IDE
+*.iml
+.idea/
+.vscode/
+
+# Ignorar arquivos de log
+*.log
+
+# Ignorar arquivos de backup
+*.bak
+*.tmp
+
+# Ignorar outros arquivos indesejados
+*.sql~
