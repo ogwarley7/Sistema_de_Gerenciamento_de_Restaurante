@@ -1,0 +1,5 @@
+Sistema de Gerenciamento de Restaurante
+
+Este projeto consiste em um sistema de gerenciamento para um restaurante. O sistema permite o registro de clientes, 
+mesas, pedidos e itens de pedidos. O banco de dados foi criado utilizando SQL e inclui tabelas que mantêm a integridade referencial entre os dados. 
+O objetivo é facilitar a gestão das operações diárias do restaurante, permitindo um acesso eficiente às informações sobre clientes e pedidos.
